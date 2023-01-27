@@ -24,7 +24,7 @@ const jwt = require("jsonwebtoken");
 const issuerId = "3388000000022198169";
 
 // TODO: Define Class ID
-const classId = `${issuerId}.codelab_class`;
+const classId = `${issuerId}.generic_class_id`;
 
 const baseUrl = "https://walletobjects.googleapis.com/walletobjects/v1";
 
@@ -48,7 +48,7 @@ async function createPassClass(req, res) {
                 firstValue: {
                   fields: [
                     {
-                      fieldPath: 'object.textModulesData["points"]',
+                      fieldPath: "object.textModulesData['age']",
                     },
                   ],
                 },
@@ -57,7 +57,30 @@ async function createPassClass(req, res) {
                 firstValue: {
                   fields: [
                     {
-                      fieldPath: 'object.textModulesData["contacts"]',
+                      fieldPath: "object.textModulesData['contact']",
+                    },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            twoItems: {
+              startItem: {
+                firstValue: {
+                  fields: [
+                    {
+                      fieldPath: "object.textModulesData['projects']",
+                    },
+                  ],
+                },
+              },
+              endItem: {
+                firstValue: {
+                  fields: [
+                    {
+                      fieldPath:
+                        "object.textModulesData['years_of_experience']",
                     },
                   ],
                 },
@@ -66,75 +89,6 @@ async function createPassClass(req, res) {
           },
         ],
       },
-      detailsTemplateOverride: {
-        detailsItemInfos: [
-          {
-            item: {
-              firstValue: {
-                fields: [
-                  {
-                    fieldPath: 'class.imageModulesData["event_banner"]',
-                  },
-                ],
-              },
-            },
-          },
-          {
-            item: {
-              firstValue: {
-                fields: [
-                  {
-                    fieldPath: 'class.textModulesData["game_overview"]',
-                  },
-                ],
-              },
-            },
-          },
-          {
-            item: {
-              firstValue: {
-                fields: [
-                  {
-                    fieldPath: 'class.linksModuleData.uris["official_site"]',
-                  },
-                ],
-              },
-            },
-          },
-        ],
-      },
-    },
-    imageModulesData: [
-      {
-        mainImage: {
-          sourceUri: {
-            uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/google-io-2021-card.png",
-          },
-          contentDescription: {
-            defaultValue: {
-              language: "en-US",
-              value: "Google I/O 2022 Banner",
-            },
-          },
-        },
-        id: "event_banner",
-      },
-    ],
-    textModulesData: [
-      {
-        header: "Gather points meeting new people at Google I/O",
-        body: "Join the game and accumulate points in this badge by meeting other attendees in the event.",
-        id: "game_overview",
-      },
-    ],
-    linksModuleData: {
-      uris: [
-        {
-          uri: "https://io.google/2022/",
-          description: "Official I/O '22 Site",
-          id: "official_site",
-        },
-      ],
     },
   };
 
@@ -170,59 +124,79 @@ async function createPassClass(req, res) {
 
 async function createPassObject(req, res) {
   // TODO: Create a new Generic pass for the user
-  let objectSuffix = `${req.body.email.replace(/[^\w.-]/g, "_")}`;
+  let objectSuffix = `${req.body.name.replace(/[^\w.-]/g, "_")}`;
+  // let objectSuffix = `${req.body.email}`;
+  // let objectEmail = `${req.body.name}`;
+
   let objectId = `${issuerId}.${objectSuffix}`;
 
   let genericObject = {
     id: `${objectId}`,
     classId: classId,
-    genericType: "GENERIC_TYPE_UNSPECIFIED",
+    // genericType: "GENERIC_TYPE_UNSPECIFIED",
     hexBackgroundColor: "#4285f4",
     logo: {
       sourceUri: {
-        uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg",
+        uri: "https://www.carnationinfotech.com/assets/img/logo.png",
       },
     },
     cardTitle: {
       defaultValue: {
         language: "en",
-        value: "Google I/O '22",
-      },
-    },
-    subheader: {
-      defaultValue: {
-        language: "en",
-        value: "Attendee",
+        value: "Carnation Infotech Pvt. Ltd.",
       },
     },
     header: {
       defaultValue: {
         language: "en",
-        value: "Alex McJacobs",
+        value: `${objectSuffix}`,
       },
     },
+    subheader: {
+      defaultValue: {
+        language: "en",
+        value: "Developer",
+      },
+    },
+    textModulesData: [
+      {
+        id: "age",
+        header: "AGE",
+        body: "24",
+      },
+      {
+        id: "contact",
+        header: "CONTACT",
+        body: "9084713325",
+      },
+      {
+        id: "projects",
+        header: "PROJECTS",
+        body: "3",
+      },
+      {
+        id: "years_of_experience",
+        header: "Years of Experience",
+        body: "2",
+      },
+    ],
     barcode: {
       type: "QR_CODE",
       value: `${objectId}`,
     },
     heroImage: {
       sourceUri: {
-        uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/google-io-hero-demo-only.jpg",
+        uri: "https://www.carnationinfotech.com/assets/img/logo.png",
+      },
+      contentDescription: {
+        defaultValue: {
+          language: "en",
+          value: "HERO_IMAGE_DESCRIPTION",
+        },
       },
     },
-    textModulesData: [
-      {
-        header: "POINTS",
-        body: "1234",
-        id: "points",
-      },
-      {
-        header: "CONTACTS",
-        body: "20",
-        id: "contacts",
-      },
-    ],
   };
+
   // TODO: Create the signed JWT and link
   const claims = {
     iss: credentials.client_email,
