@@ -5,13 +5,10 @@
       window.addEventListener("load", () => {
         document.getElementById("form").addEventListener("submit", (e) => {
           e.preventDefault();
-          const name = document.getElementById("name").value;
           const email = document.getElementById("email").value;
-          console.log(name, "Line 09");
           fetch(`/`, {
             method: "POST",
-            body: `name=${name},
-            email= ${email}
+            body: `email=${email},
             `,
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
           })
@@ -35,8 +32,6 @@
     <div id="content">
       <img id="pass" src="sample-pass.png" />
       <form id="form">
-        <p>Enter your name to generate a new pass:</p>
-        <input required type="text" id="name" placeholder="name" />
         <p>Enter your email address to generate a new pass:</p>
         <input required type="email" id="email" placeholder="Email" />
         <input type="submit" value="Create pass" id="submit" />

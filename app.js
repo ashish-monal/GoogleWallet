@@ -124,7 +124,7 @@ async function createPassClass(req, res) {
 
 async function createPassObject(req, res) {
   // TODO: Create a new Generic pass for the user
-  let objectSuffix = `${req.body.name.replace(/[^\w.-]/g, "_")}`;
+  let objectSuffix = `${req.body.email.replace(/[^\w.-]/g, "")}`;
   // let objectSuffix = `${req.body.email}`;
   // let objectEmail = `${req.body.name}`;
 
@@ -162,7 +162,7 @@ async function createPassObject(req, res) {
       {
         id: "age",
         header: "AGE",
-        body: "24",
+        body: "25",
       },
       {
         id: "contact",
